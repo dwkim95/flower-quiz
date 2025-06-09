@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 소울 플라워 찾기</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        /* 간단한 페이드인 애니메이션 */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-pink-50 min-h-screen flex items-center justify-center p-4">
+
+    <div id="app" class="w-full max-w-lg mx-auto bg-white rounded-2xl shadow-xl p-6 sm:p-8 text-center transition-all duration-500">
+
+        <!-- 시작 화면 -->
+        <div id="start-screen" class="fade-in">
+            <img src="https://i.ibb.co/zVvYyFk/main-flower-teenie.png" alt="꽃 요정 아이콘" class="w-32 h-32 mx-auto rounded-full shadow-lg mb-6">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">나의 소울 플라워 찾기</h1>
+            <p class="text-gray-600 mb-8">간단한 테스트를 통해 당신의 성격과 꼭 닮은<br>귀여운 플라워 요정을 찾아보세요!</p>
+            <button onclick="startQuiz()" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105">
+                테스트 시작하기
+            </button>
+        </div>
+
+        <!-- 퀴즈 화면 -->
+        <div id="quiz-screen" class="hidden">
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                <div id="progress-bar" class="bg-pink-500 h-2.5 rounded-full" style="width: 0%"></div>
+            </div>
+            <h2 id="question" class="text-2xl font-bold text-gray-800 mb-8 h-20 flex items-center justify-center"></h2>
+            <div id="answers" class="space-y-4">
+                <!-- 답변 버튼이 여기에 동적으로 추가됩니다 -->
+            </div>
+        </div>
+
+        <!-- 수익화 링크 화면 -->
+        <div id="monetization-screen" class="hidden fade-in">
+            <img src="https://i.ibb.co/QXPGFs4/gift-icon-teenie.png" alt="선물상자 아이콘" class="w-32 h-32 mx-auto rounded-full shadow-lg mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">결과가 거의 다 준비되었어요!</h2>
+            <p class="text-gray-600 mb-8">테스트 제작자에게 힘이 되어주세요! ☕<br>잠깐 파트너스 스토어를 구경하고<br>바로 결과를 확인해 보세요.</p>
+            <button onclick="showResult()" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105">
+                파트너스 스토어 구경하고 결과 보기
+            </button>
+             <p class="text-xs text-gray-400 mt-4">이 포스팅은 쿠팡 파트너스 활동의 일환으로,<br>이에 따른 일정액의 수수료를 제공받습니다.</p>
+        </div>
+        
+        <!-- 결과 화면 -->
+        <div id="result-screen" class="hidden">
+            <p class="text-pink-500 font-bold mb-2">당신의 소울 플라워 요정은...</p>
+            <h1 id="result-title" class="text-3xl font-bold text-gray-800 mb-4"></h1>
+            <img id="result-image" src="" alt="결과 이미지" class="w-full max-w-sm mx-auto h-auto object-contain rounded-lg shadow-lg mb-6" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+            <div id="result-description-container" class="text-gray-700 mb-8 text-left p-4 bg-pink-50 rounded-lg">
+                <!-- 결과 설명이 여기에 동적으로 생성됩니다 -->
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <button id="copy-link-btn" onclick="copyLink()" class="bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-bold py-3 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105 flex items-center justify-center gap-2">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                     </svg>
+                     <span>링크 복사</span>
+                </button>
+                <button onclick="restartQuiz()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105">
+                    다시하기
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 퀴즈 데이터
+        const quizData = [
+            {
+                question: "주말에 당신은 주로 무엇을 하나요?",
+                answers: [
+                    { text: "친구들과 만나 활기차게 수다 떨기", type: "A" },
+                    { text: "집에서 조용히 책 읽거나 영화 보기", type: "B" },
+                    { text: "새로운 장소를 찾아 떠나는 여행", type: "C" },
+                    { text: "창의적인 취미 활동에 몰두하기", type: "D" }
+                ]
+            },
+            {
+                question: "친구가 고민을 털어놓을 때 당신의 반응은?",
+                answers: [
+                    { text: "적극적으로 해결책을 함께 찾아준다", type: "A" },
+                    { text: "말없이 들어주며 깊이 공감해준다", type: "B" },
+                    { text: "긍정적인 말로 기운을 북돋아준다", type: "C" },
+                    { text: "독창적인 관점으로 조언을 해준다", type: "D" }
+                ]
+            },
+            {
+                question: "당신이 선호하는 색감은 어떤 느낌인가요?",
+                answers: [
+                    { text: "열정적이고 화려한 레드 계열", type: "A" },
+                    { text: "차분하고 편안한 블루 또는 퍼플 계열", type: "B" },
+                    { text: "밝고 명랑한 옐로우 또는 오렌지 계열", type: "C" },
+                    { text: "신비롭고 개성 있는 독특한 색 조합", type: "D" }
+                ]
+            },
+            {
+                question: "새로운 도전에 직면했을 때 당신의 마음은?",
+                answers: [
+                    { text: "자신감 넘치게! 정면으로 부딪힌다", type: "A" },
+                    { text: "신중하게 계획을 세우고 접근한다", type: "B" },
+                    { text: "어떻게든 되겠지! 일단 즐겁게 시작한다", type: "C" },
+                    { text: "남들과 다른 나만의 방식으로 해결한다", type: "D" }
+                ]
+            }
+        ];
+
+        // 결과 데이터
+        const results = {
+            A: {
+                title: "새침 매력 로즈핑",
+                image: "https://i.ibb.co/hZ5yS9v/rose-teenieping.png",
+                description: [
+                    "장미처럼 화려하고 정열적인 당신은 사람들을 끌어당기는 타고난 매력의 소유자입니다.",
+                    "어디서든 주목받는 것을 즐기는 인싸 기질이 있어요.",
+                    "목표가 생기면 망설이지 않고 적극적으로 행동해요.",
+                    "솔직하고 직설적인 화법을 구사하지만 뒤끝은 없어요.",
+                    "연애할 때 밀당보다는 뜨겁게 사랑하는 로맨티스트예요.",
+                    "자신감 넘치는 모습 뒤에 가끔은 외로움을 느끼기도 해요."
+                ]
+            },
+            B: {
+                title: "포근포근 라벤핑",
+                image: "https://i.ibb.co/bF9KHgS/lavender-teenieping.png",
+                description: [
+                    "라벤더의 향기처럼 편안하고 안정감을 주는 당신은 주변 사람들을 치유하는 힐러 타입입니다.",
+                    "차분하고 내향적이지만, 친한 사람들과 깊은 관계를 맺어요.",
+                    "다른 사람의 감정을 잘 파악하고 깊이 공감해줘요.",
+                    "시끄러운 장소보다는 조용한 공간에서 안정감을 느껴요.",
+                    "자신만의 신념과 가치관이 뚜렷해요.",
+                    "먼저 다가가는 것은 서툴지만, 한번 마음을 열면 누구보다 따뜻해요."
+                ]
+            },
+            C: {
+                title: "해피바이러스 프리지핑",
+                image: "https://i.ibb.co/wYx3Zk6/freesia-teenieping.png",
+                description: [
+                    "봄소식을 알리는 프리지아처럼, 당신은 주변을 환하게 밝히는 긍정 에너지의 아이콘입니다.",
+                    "호기심이 많고 새로운 도전을 두려워하지 않아요.",
+                    "긍정적이고 낙천적인 성격으로 주변에 웃음을 선사해요.",
+                    "순수한 아이 같은 면이 있어 사람들이 쉽게 마음을 열어요.",
+                    "계획보다는 즉흥적인 것을 즐기는 자유로운 영혼이에요.",
+                    "가끔은 너무 해맑아서 현실 감각이 없어 보일 때도 있어요."
+                ]
+            },
+            D: {
+                title: "신비로운 물망초핑",
+                image: "https://i.ibb.co/ncdcFc2/forgetmenot-teenieping.png",
+                description: [
+                    "'나를 잊지 말아요'라는 꽃말처럼, 당신은 한번 보면 잊을 수 없는 독특한 매력과 개성을 지녔습니다.",
+                    "남들과 다른 나만의 시각과 스타일을 가지고 있어요.",
+                    "예술적인 감각이 뛰어나고 창의적인 활동을 즐겨요.",
+                    "겉으로는 무심해 보이지만 속마음은 누구보다 따뜻해요.",
+                    "진실된 관계를 중요하게 생각하며, 한번 맺은 인연을 소중히 여겨요.",
+                    "가끔은 자신만의 세계에 빠져 현실과 동떨어져 보일 수 있어요."
+                ]
+            }
+        };
+
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const monetizationScreen = document.getElementById('monetization-screen');
+        const resultScreen = document.getElementById('result-screen');
+        const progressBar = document.getElementById('progress-bar');
+        const questionEl = document.getElementById('question');
+        const answersEl = document.getElementById('answers');
+
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            startScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            quizScreen.classList.add('fade-in');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const currentQuiz = quizData[currentQuestionIndex];
+            const progress = ((currentQuestionIndex) / quizData.length) * 100;
+            
+            progressBar.style.width = `${progress}%`;
+            questionEl.textContent = currentQuiz.question;
+            answersEl.innerHTML = '';
+
+            currentQuiz.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.textContent = answer.text;
+                button.className = "w-full bg-pink-100 hover:bg-pink-200 text-gray-700 font-semibold py-3 px-4 rounded-lg transition-all duration-200";
+                button.onclick = () => selectAnswer(answer.type);
+                answersEl.appendChild(button);
+            });
+        }
+
+        function selectAnswer(type) {
+            userAnswers.push(type);
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < quizData.length) {
+                const progress = ((currentQuestionIndex) / quizData.length) * 100;
+                progressBar.style.width = `${progress}%`;
+                quizScreen.classList.remove('fade-in');
+                void quizScreen.offsetWidth;
+                quizScreen.classList.add('fade-in');
+                showQuestion();
+            } else {
+                progressBar.style.width = '100%';
+                setTimeout(() => {
+                    quizScreen.classList.add('hidden');
+                    monetizationScreen.classList.remove('hidden');
+                }, 500);
+            }
+        }
+        
+        function getResultType() {
+            const counts = {};
+            userAnswers.forEach(answer => {
+                counts[answer] = (counts[answer] || 0) + 1;
+            });
+            return Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+        }
+
+        function showResult() {
+            // 여기에 자신의 쿠팡 파트너스 링크를 넣으세요!
+            const coupartnersLink = "https://link.coupang.com/a/bxxxx"; 
+            window.open(coupartnersLink, '_blank');
+            
+            const resultType = getResultType();
+            const result = results[resultType];
+
+            document.getElementById('result-title').textContent = result.title;
+            document.getElementById('result-image').src = result.image;
+            document.getElementById('result-image').alt = result.title;
+            
+            const descriptionContainer = document.getElementById('result-description-container');
+            descriptionContainer.innerHTML = ''; 
+
+            const intro = document.createElement('p');
+            intro.textContent = result.description[0];
+            intro.className = "font-semibold mb-4";
+            descriptionContainer.appendChild(intro);
+
+            const list = document.createElement('ul');
+            list.className = "space-y-2";
+            for (let i = 1; i < result.description.length; i++) {
+                const item = document.createElement('li');
+                item.className = "flex items-start";
+                
+                const bullet = document.createElement('span');
+                bullet.textContent = '💖';
+                bullet.className = "mr-2";
+                item.appendChild(bullet);
+
+                const text = document.createElement('span');
+                text.textContent = result.description[i];
+                item.appendChild(text);
+
+                list.appendChild(item);
+            }
+            descriptionContainer.appendChild(list);
+
+            monetizationScreen.classList.add('hidden');
+            resultScreen.classList.remove('hidden');
+            resultScreen.classList.add('fade-in');
+        }
+
+        function restartQuiz() {
+            resultScreen.classList.add('hidden');
+            startScreen.classList.remove('hidden');
+            startScreen.classList.add('fade-in');
+        }
+
+        function copyLink() {
+            const textArea = document.createElement("textarea");
+            textArea.value = window.location.href;
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                const copyBtn = document.getElementById('copy-link-btn');
+                const originalContent = copyBtn.innerHTML;
+                copyBtn.innerHTML = `✅ 복사 완료!`;
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalContent;
+                }, 2000);
+            } catch (err) {
+                console.error('링크 복사에 실패했습니다.', err);
+                alert('오류가 발생하여 링크를 복사할 수 없습니다.');
+            }
+            document.body.removeChild(textArea);
+        }
+
+    </script>
+</body>
+</html>
