@@ -25,7 +25,7 @@
 
         <!-- 시작 화면 -->
         <div id="start-screen" class="fade-in">
-            <img src="images/해바라기린.png" alt="해바라기린 아이콘" class="w-32 h-32 mx-auto rounded-full shadow-lg mb-6" onerror="this.src='https://i.ibb.co/Yd4B3S7/main-sunflower-giraffe.png'">
+            <img src="images/해바라기린.PNG" alt="해바라기린 아이콘" class="w-32 h-32 mx-auto rounded-full shadow-lg mb-6" onerror="this.src='https://i.ibb.co/Yd4B3S7/main-sunflower-giraffe.png'">
             <h1 class="text-3xl font-bold text-gray-800 mb-2">관종력 테스트</h1>
             <p class="text-gray-600 mb-8">나는 혹시 관종일까?<br>나의 병맛미 넘치는 꽃-BTI를 확인해보세요!</p>
             <button onclick="startQuiz()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transition-transform transform hover:scale-105">
@@ -99,14 +99,12 @@
             { question: "갑자기 하루의 자유시간이 생겼다. 무엇을 할까?", answers: [{ text: "당장 친구들에게 전화해서 약속을 잡는다.", type: "A" },{ text: "집에서 뒹굴뒹굴... 침대 밖은 위험해.", type: "B" },{ text: "평소에 읽고 싶었던 책을 읽거나 혼자만의 시간을 갖는다.", type: "C" },{ text: "평소에 벼르던 맛집 탐방이나 쇼핑을 하러 간다.", type: "D" }] }
         ];
 
-        // 결과 데이터: 이미지 경로를 로컬 파일로 변경
-        // ★★★★★ 중요 ★★★★★
-        // images 폴더 안의 실제 파일 이름과 아래 image: "경로"가 정확히 일치하는지 확인하세요!
+        // 결과 데이터: 이미지 경로의 확장자를 대문자 .PNG로 수정
         const results = {
-            A: { title: "관심 MAX! 해바라기린", image: "images/해바라기린.png", description: ["목이 긴 기린처럼 언제나 관심의 중심에 서고 싶은 당신! 자타공인 핵인싸 타입입니다.","사람들의 주목을 즐기며, 칭찬 한마디에 하루 종일 춤을 춥니다.","긍정 에너지와 추진력이 넘쳐 주변 사람들을 이끄는 리더 역할을 자주 맡습니다.","하지만 가끔 너무 나서는 바람에 눈총을 사기도 합니다. (알지만 멈출 수 없음)","외로움은 1초도 참을 수 없는 당신, 오늘도 친구들을 찾아 떠납니다.","관종력: 99%"] },
-            B: { title: "만사태평! 민들레오파드", image: "images/민들레오파드.png", description: ["바람 따라 흩날리는 민들레 홀씨처럼, 세상만사 자유롭고 태평한 당신! 하지만 내면엔 맹수(레오파드)가 숨어있습니다.","귀찮은 일은 어떻게든 피하고 보는 미루기 끝판왕입니다.","최소한의 에너지로 최대한의 효율을 추구하는 '갓성비' 라이프를 지향합니다.","하지만 누군가 나의 영역을 침범하거나 선을 넘는다면, 숨겨왔던 발톱을 드러냅니다.","혼자만의 시간을 무엇보다 소중하게 생각합니다. (제발 말 걸지 마...)", "관종력: 15%"] },
-            C: { title: "팩트 폭격! 선인장아치", image: "images/선인장아치.png", description: ["고슴도치처럼 뾰족한 가시를 세운 선인장 같은 당신! 다가가기 어렵지만, 속은 누구보다 촉촉한 츤데레입니다.","T발? C야? 라는 말을 자주 듣는, 공감 능력보다는 이성적인 판단이 앞서는 타입입니다.","무뚝뚝하고 직설적이라 오해를 사지만, 사실은 상처받는 게 두려울 뿐입니다.","한번 마음을 연 상대에게는 모든 걸 내어주는 의리파입니다.","나만의 공간과 시간을 존중해 주는 사람에게 큰 매력을 느낍니다.","관종력: 30% (관심은 싫지만, 은근히 알아주길 바람)"] },
-            D: { title: "은밀한 사냥꾼! 파리지옥아리", image: "images/파리지옥아리.png", description: ["여우처럼 매력적이지만, 파리지옥처럼 날카로운 함정을 숨기고 있는 당신! 영리하고 신비로운 밀당의 고수입니다.","사람들의 심리를 꿰뚫어 보고 상황을 자신에게 유리하게 만드는 능력이 탁월합니다.","겉으로는 다 맞춰주는 척하지만, 결국 모든 것은 당신의 큰 그림 안에 있습니다.","재미없는 것은 죽어도 못 참는, 쾌락과 새로운 자극을 추구하는 타입입니다.","친절한 미소 뒤에 숨겨진 당신의 진짜 생각을 아는 사람은 아무도 없습니다.","관종력: 75% (직접적인 관심보다, 은밀한 관심과 질투를 즐김)"] }
+            A: { title: "관심 MAX! 해바라기린", image: "images/해바라기린.PNG", description: ["목이 긴 기린처럼 언제나 관심의 중심에 서고 싶은 당신! 자타공인 핵인싸 타입입니다.","사람들의 주목을 즐기며, 칭찬 한마디에 하루 종일 춤을 춥니다.","긍정 에너지와 추진력이 넘쳐 주변 사람들을 이끄는 리더 역할을 자주 맡습니다.","하지만 가끔 너무 나서는 바람에 눈총을 사기도 합니다. (알지만 멈출 수 없음)","외로움은 1초도 참을 수 없는 당신, 오늘도 친구들을 찾아 떠납니다.","관종력: 99%"] },
+            B: { title: "만사태평! 민들레오파드", image: "images/민들레오파드.PNG", description: ["바람 따라 흩날리는 민들레 홀씨처럼, 세상만사 자유롭고 태평한 당신! 하지만 내면엔 맹수(레오파드)가 숨어있습니다.","귀찮은 일은 어떻게든 피하고 보는 미루기 끝판왕입니다.","최소한의 에너지로 최대한의 효율을 추구하는 '갓성비' 라이프를 지향합니다.","하지만 누군가 나의 영역을 침범하거나 선을 넘는다면, 숨겨왔던 발톱을 드러냅니다.","혼자만의 시간을 무엇보다 소중하게 생각합니다. (제발 말 걸지 마...)", "관종력: 15%"] },
+            C: { title: "팩트 폭격! 선인장아치", image: "images/선인장아치.PNG", description: ["고슴도치처럼 뾰족한 가시를 세운 선인장 같은 당신! 다가가기 어렵지만, 속은 누구보다 촉촉한 츤데레입니다.","T발? C야? 라는 말을 자주 듣는, 공감 능력보다는 이성적인 판단이 앞서는 타입입니다.","무뚝뚝하고 직설적이라 오해를 사지만, 사실은 상처받는 게 두려울 뿐입니다.","한번 마음을 연 상대에게는 모든 걸 내어주는 의리파입니다.","나만의 공간과 시간을 존중해 주는 사람에게 큰 매력을 느낍니다.","관종력: 30% (관심은 싫지만, 은근히 알아주길 바람)"] },
+            D: { title: "은밀한 사냥꾼! 파리지옥아리", image: "images/파리지옥아리.PNG", description: ["여우처럼 매력적이지만, 파리지옥처럼 날카로운 함정을 숨기고 있는 당신! 영리하고 신비로운 밀당의 고수입니다.","사람들의 심리를 꿰뚫어 보고 상황을 자신에게 유리하게 만드는 능력이 탁월합니다.","겉으로는 다 맞춰주는 척하지만, 결국 모든 것은 당신의 큰 그림 안에 있습니다.","재미없는 것은 죽어도 못 참는, 쾌락과 새로운 자극을 추구하는 타입입니다.","친절한 미소 뒤에 숨겨진 당신의 진짜 생각을 아는 사람은 아무도 없습니다.","관종력: 75% (직접적인 관심보다, 은밀한 관심과 질투를 즐김)"] }
         };
 
         let currentQuestionIndex = 0;
@@ -206,34 +204,27 @@
             resultScreen.classList.add('fade-in');
         }
 
-        // '전체 결과 보기' 버튼을 위한 함수 수정
         function showSummary() {
             resultScreen.classList.add('hidden');
             summaryScreen.classList.remove('hidden');
 
             const summaryGrid = document.getElementById('summary-grid');
-            summaryGrid.innerHTML = ''; // 이전 결과 비우기
+            summaryGrid.innerHTML = ''; 
 
-            // 모든 결과(A, B, C, D)를 순회하며 카드 만들기
             for (const key in results) {
                 const result = results[key];
-
                 const card = document.createElement('div');
                 card.className = 'flex flex-col items-center p-2 rounded-lg bg-amber-100 shadow-sm';
-
                 const img = document.createElement('img');
                 img.src = result.image;
                 img.alt = result.title;
                 img.className = 'w-full h-auto rounded-md';
                 img.onerror = function() { this.src='https://placehold.co/200x200/cccccc/ffffff?text=Image+Not+Found'; };
-
                 const title = document.createElement('p');
                 title.textContent = result.title;
                 title.className = 'mt-2 font-semibold text-sm text-gray-700';
-
                 card.appendChild(img);
                 card.appendChild(title);
-
                 summaryGrid.appendChild(card);
             }
         }
